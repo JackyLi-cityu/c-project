@@ -20,14 +20,10 @@ private:
 	string _status;
 
 public:
-	string getUserId();
-	string getpassword();
-	void setUserId(string UserId);
-	void setpassword(string password);
 	Admin();
 	void loanRecord(int _loanDate, string _itemCode, string _itemName,
-		string _NameOfBorrower, int _returnDate, string _status);
+		string _NameOfBorrower, int _returnDate, string _status); // point no.2
 	void displayloanRecord();
-
+	void produceNewTextFile();
 };
 #endif 
