@@ -1,17 +1,11 @@
-#ifndef LOANCONTROL_H
-#define LOANCONTROL_H
 #include <iostream>
-#include <string>
+
+#ifndef LOANCONTROL_H
 using namespace std;
 
-class LoanControl
+class loancontrol
 {
 public:
-	int numOfItems;
-
-public:
-	LoanControl()
-	
-
+    bool check(Users x, Equipments y);
 };
-#endif 
+#endif
