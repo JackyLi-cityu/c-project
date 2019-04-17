@@ -3,12 +3,13 @@
 #include "FileHandler.h"
 using namespace std;
 
-string User::getUserName() {
-	return _UserName;
-}
 
 string User::getUserId() {
 	return _UserId;
+}
+
+string User::getUserName() {
+	return _UserName;
 }
 
 string User::getSection() {
