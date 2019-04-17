@@ -1,60 +1,79 @@
 #ifndef USER_H
 #define USER_H
 #include <iostream>
-#include <string>
-
 using namespace std;
 
 class User {
-protected:
+protected:						//	Convenient for inheritane
+	//	Set the identity of user (general)
 	string _UserId;
-	string _Name;
-	string _section;
-	int _dateOfBirth;
-	string _address;
-
+	string _UserName;
+	string _Section;
+	int _DateOfBirth;
+	string _Address;
+	string _password;			//	prepare for login
+	int _UpperLoanLimit;			//	for updating the number of quota
+	bool borrowing = false;		//	Assume the user did not borrow before
 public:
-	virtual void outputUserAttributeInfo() = 0;
 	string getUserId();
-	string getName();
-	string getsection();
-	int getdateOfBirth();
-	string getaddress();
+	string getUserName();
+	string getSection();
+	int getDateOfBirth();
+	string getAddress();
+	void setUserId(string id);
+	void setPassword(string password);
+	void setLoanStatus(bool status);
+	void setLoanNumber(int number);
+	int getLoanNumber();
+	virtual bool getStatus();
+	virtual void borrowItem();
+	virtual void returnItem();
 	User();
-	User(string UserId, string Name, string section, int dateOfBirth, string address);
-	bool canBorrow();
-
+	~User();
+	User(string UserId, string UserName, string Section, int DateOfBirth, string Address);
 };
+
 
 class Scout : public User {
-private:
-	string _SCTrank;
-	int MaxLoan;
-
+protected:
+	string _Rank;
 public:
-	Scout(string UserId, string Name, string section, int dateOfBirth, string address, string SCTrank);
+	Scout(string Id, string Name, string Section, int DateOfBirth, string Address, string  _Rank);
+	Scout();
+	virtual bool getStatus();
+	virtual void borrowItem();
+	virtual void returnItem();
 };
+
+
+class VentureScout : public User {
+public:
+	VentureScout(string UserId, string UserName, string Section, int DateOfBirth, string Address);
+	VentureScout();
+	virtual bool getStatus();
+	virtual void borrowItem();
+	virtual void returnItem();
+};
+
+
+class RoverScout : public User {
+public:
+	RoverScout(string UserId, string UserName, string Section, int DateOfBirth, string Address);
+	RoverScout();
+	virtual bool getStatus();
+	virtual void borrowItem();
+	virtual void returnItem();
+};
+
 
 class Scouter : public User {
 private:
-	string _SCMrank;
-	int MaxLoan;
-
+	string _Rank;
 public:
-	Scouter(string UserId, string Name, string section, int dateOfBirth, string address, string SCMrank);
-};
-
-class Venture : public User {
-private:
-	int MaxLoan;
-public:
-	Venture(string UserId, string Name, string section, int dateOfBirth, string address);
-};
-
-class Rover : public User {
-private:
-	int MaxLoan;
-public:
-	Rover(string UserId, string Name, string section, int dateOfBirth, string address);
+	Scouter(string UserId, string Name, string Section, int DateOfBirth, string Address, string Rank);
+	Scouter();
+	virtual bool getStatus();
+	virtual void borrowItem();
+	virtual void returnItem();
 };
 #endif 
