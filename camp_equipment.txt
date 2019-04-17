@@ -22,3 +22,4 @@ L003|Moji Lantern|Black Diamond|lantern|06062017|good|out|camping|led lamp|AA ba
 L004|Moji Lantern|Black Diamond|lantern|06062017|good|out|camping|led lamp|AA batteries
 L005|Cardinol Navigator|Black Diamond|lantern|06062017|good|in|camping|beam lamp|C batteries
 L006|Tall Beam Lamp|XXX|lantern|04062016|good|in|camping|beam lamp|D batteries
+

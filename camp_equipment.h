@@ -1,57 +1,60 @@
-#ifndef EQUIPMENT_H
-#define EQUIPMENT_H
-
+#ifndef CAMPEQUIPMENT_H
+#define CAMPEQUIPMENT_H
 #include <iostream>
 #include <string>
 using namespace std;
 
-class Equipment {
+class Equipment			//	the Equipment class is also the ABC, the following diplayInfo will be used in the menu
+{
 private:
-	string _itemCode;
-	string _itemName;
-	string _brand;
-	string _itemType;
-	int _dateOfPurchase;
-	string _condition;
-	string _status;
-
+	//	basic info for identifying different camp equipments
+	string _itemCode;		
+	string _itemName;		
+	string _brand;		
+	string _EquipType;		
+	int _PurchaseDate;			
+	string _condition;	
+	string _status;		
 public:
-	virtual void outputEquipAttributeInfo() = 0;	// characteristic of Abstract class
-	Equipment(string itemCode, string itemName, string brand, string itemType, int dateOfPurchase, string condition, string status);
-	void outputBasicInfo(); 
-	bool isReturn();
-	bool Avaliable();
-	
-};
-	
-class Tent : public Equipment {
-private:
-	int pplnum;
-	string tentType;
-	int numberOfDoors;
-	bool doubleLayer;
-	string colour;
-
-public:
-	
-	void outputTentAttributeInfo();
-};
-class Stove : public Equipment {
-private:
-	string stoveType;
-	string fuelType;
-
-public:
-	void outputStoveAttributeInfo();
+	Equipment(string itemCode, string itemName, string brand, string EquipType,
+		int Purchasedate, string condition, string status);
+	~Equipment();
+	void displayCommonInfo();						// Display basic information
+	virtual void displayAttributeInfo();	//	Display attribute
+	bool returnStatus();
+	string returnitemName();
 };
 
-class Lantern : public Equipment {
+class tent : public Equipment
+{
 private:
-	string lanternSize;
-	string lanternType;
-	string fuelType;
-		
+	int _tentSize;		
+	string _tentType;	
+	int _numberOfDoors;	
+	bool _doubleLayer;	
+	string _colour;		
 public:
-	void outputLanternAttributeInfo();
+	virtual void displayAttributeInfo();	//	display the unique features of tent
 };
-#endif
+
+class stove : public Equipment
+{
+private:
+	string _stoveType;
+	string _fuelType;
+public:
+	virtual void displayAttributeInfo();
+};
+
+class lantern : public Equipment
+{
+private:
+	string _lanternSize;	
+	string _lanternType;	
+	string _fuelType;	
+public:
+	virtual void displayAttributeInfo();	
+};
+
+
+#endif 

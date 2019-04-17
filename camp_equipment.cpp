@@ -1,43 +1,53 @@
 #include "camp_equipment.h"
-#include <string>
-#include <iostream>
 using namespace std;
 
-Equipment::Equipment(string itemCode, string itemName, string brand,
-	string itemType, int dateOfPurchase, string condition, string status) {
+Equipment::Equipment(string itemCode, string itemName, string brand, string EquipType, int PurchaseDate, string condition, string status)
+{
 	_itemCode = itemCode;
 	_itemName = itemName;
 	_brand = brand;
-	_itemType = itemType;
-	_dateOfPurchase = dateOfPurchase;
+	_EquipType = EquipType;
+	_PurchaseDate = PurchaseDate;
+	_condition = condition;
+	_status = status;
 }
 
-void Equipment::outputBasicInfo()
+Equipment::~Equipment(){}
+
+void Equipment::displayCommonInfo()
 {
-	cout << _itemCode << "|" << _itemName << "|" << _brand << "|" << _itemType << "|" << _dateOfPurchase << "|" << _condition << "|" << _status << "|" << endl;
+	cout << _itemCode << "|" << _itemName << "|" << _brand << "|" << _EquipType << "|" << _PurchaseDate << "|" << _condition << "|" << _status << endl;
 }
 
+void Equipment::displayAttributeInfo(){}
 
-void Tent::outputTentAttributeInfo()
+
+bool Equipment::returnStatus()
 {
-	cout << pplnum << "|" << tentType << "|" << numberOfDoors << "|" << doubleLayer << "|" << colour << endl;
+	if (_status == "in")
+		return true;
+	else return false;
 }
 
-
-void Stove::outputStoveAttributeInfo()
+string Equipment::returnitemName()
 {
-	cout << stoveType << "|" << fuelType << endl;
+	return _itemName;
 }
 
-void Lantern::outputLanternAttributeInfo()
+//	make use of this pure virtual function in different types of camp equipments
+
+void tent::displayAttributeInfo()
 {
-	cout << lanternSize << "|" << lanternType << "|" << fuelType << endl;
+	cout << "|" << _tentSize << "|" << _tentType << "|" << _numberOfDoors << "|" << _doubleLayer << "|" << _colour << endl;
 }
 
-bool Equipment::isReturn() {
-	 _status == "in" ? true : false;
+void stove::displayAttributeInfo()
+{
+	cout << "|" << _stoveType << "|" << _fuelType << endl;
 }
 
-bool Equipment::Avaliable() {
-	_condition == "good" ? true : false;
+void lantern::displayAttributeInfo()
+{
+	cout << "|" << _lanternSize << "|" << _lanternType << "|" << _fuelType << endl;
 }
+
