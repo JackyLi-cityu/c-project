@@ -1,15 +1,19 @@
-#ifndef FILEHANDLER_H
+    #ifndef FILEHANDLER_H
 #define FILEHANDLER_H
 #include <iostream>
 #include <fstream>
-#include <sstream>
 #include <string>
-using namespace std;
+#include "camp_equipment.h"
+#include "User.h"
 
-class fileHandler
+class FileHandler
 {
 public:
-	string fileRead(string path);
-	void fileWrite(string path, string str);
+	Equipment *EquipmentIdentity(string itemCode);
+	User *UserIdentity(string itemCode);
+	void displayEquipmentList();
+	bool login(string UserId, string DateOfBirth);
+	void changeLoanStatus(User* user);
 };
-#endif
+
+#endif 
