@@ -1,83 +1,199 @@
-#include "user.h"
-#include <iostream>
-#include <string>
+#include<iostream>
+#include "User.h"
+#include "FileHandler.h"
 using namespace std;
 
-string User::getUserId(){
+string User::getUserName() {
+	return _UserName;
+}
+
+string User::getUserId() {
 	return _UserId;
 }
 
-string User::getName() {
-	return _Name;
+string User::getSection() {
+	return _Section;
 }
 
-string User::getsection() {
-	return _section;
+int User::getDateOfBirth() {
+	return _DateOfBirth;
 }
 
-int User::getdateOfBirth() {
-	return _dateOfBirth;
+string User::getAddress() {
+	return _Address;
 }
 
-string User::getaddress() {
-	return _address;
+void User::setUserId(string id)
+{
+	this->_UserId = id;
 }
 
-User::User() {
-	_UserId = "";
-	_Name = "";
-	_section = "";
-	_dateOfBirth = 0;
-	_address = "";
+void User::setPassword(string password)
+{
+	this->_password = password;
 }
 
-User::User(string UserId, string Name, string section, int dateOfBirth, string address) {
+void User::setLoanStatus(bool status)
+{
+	borrowing = status;
+}
+
+void User::setLoanNumber(int number)
+{
+	_UpperLoanLimit -= number;
+}
+
+int User::getLoanNumber()
+{
+	return _UpperLoanLimit;
+}
+
+bool User::getStatus()
+{
+	if (_UpperLoanLimit == 0)
+		return false;
+	else return true;
+}
+
+
+void User::borrowItem() {}
+void User::returnItem() {}
+
+User::User() {}
+User::~User() {}
+
+User::User(string UserId, string UserName, string Section, int DateOfBirth, string Address) {
 	_UserId = UserId;
-	_Name = Name;
-	_section = section;
-	_dateOfBirth = dateOfBirth;
-	_address = address;
+	_UserName = UserName;
+	_Section = Section;
+	_DateOfBirth = DateOfBirth;
+	_Address = Address;
 }
 
-Scout::Scout(string UserId, string Name, string section, int dateOfBirth, string address, string SCTrank) {
-	this-> _UserId = UserId;
-	this-> _Name = Name;
-	this-> _section = section;
-	this-> _dateOfBirth = dateOfBirth;
-	this-> _address = address;
-	this-> _SCTrank = SCTrank;
-	MaxLoan = (_SCTrank == "Member") ? 1 : 3;
+Scout::Scout(string UserId, string UserName, string Section, int DateOfBirth, string Address, string  Rank) {
+	this->_UserId = UserId;
+	this->_UserName = UserName;
+	this->_Section = Section;
+	this->_DateOfBirth = DateOfBirth;
+	this->_Address = Address;
+	_Rank = Rank;
+	_UpperLoanLimit = Rank == "Assistant Patrol Leader" || Rank == "Patrol Leader" ? 3 : 1;
+}
+
+Scout::Scout() {}
+
+bool Scout::getStatus()
+{
+	if (_UpperLoanLimit == 0)	
+		return false;
+	else return true;
 	
-	cout << "Your maximum available loan number is " << MaxLoan << endl;
 }
 
-Scouter::Scouter(string UserId, string Name, string section, int dateOfBirth, string address, string SCMrank) {
-	this->_UserId = UserId;
-	this->_Name = Name;
-	this->_section = section;
-	this->_dateOfBirth = dateOfBirth;
-	this->_address = address; 
-	this->_SCMrank = SCMrank;
-	MaxLoan = 5;
-	cout << "Your maximum available loan number is " << MaxLoan << endl;
+void Scout::borrowItem()
+{
+	_UpperLoanLimit--;
+	borrowing = true;
 }
 
-Venture::Venture(string UserId, string Name, string section, int dateOfBirth, string address) {
-	this->_UserId = UserId;
-	this->_Name = Name;
-	this->_section = section;
-	this->_dateOfBirth = dateOfBirth;
-	this->_address = address;
-	MaxLoan = 3;
-	cout << "Your maximum available loan number is " << MaxLoan << endl;
+void Scout::returnItem()
+{
+	_UpperLoanLimit++;
+	borrowing = _UpperLoanLimit == 3 && (_Rank == "Assistant Patrol Leader" || _Rank == "Patrol Leader")  ? false : true;
+	borrowing = _UpperLoanLimit == 1 && _Rank == "Member" ? false : true;
 }
 
-Rover::Rover(string UserId, string Name, string section, int dateOfBirth, string address) {
+VentureScout::VentureScout(string UserId, string UserName, string Section, int DateOfBirth, string Address) {
 	this->_UserId = UserId;
-	this->_Name = Name;
-	this->_section = section;
-	this->_dateOfBirth = dateOfBirth;
-	this->_address = address;
-	MaxLoan = 5;
-	cout << "Your maximum available loan number is " << MaxLoan << endl;
+	this->_UserName = UserName;
+	this->_Section = Section;
+	this->_DateOfBirth = DateOfBirth;
+	this->_Address = Address;
+	_UpperLoanLimit = 3;
+}
+
+VentureScout::VentureScout() {}
+
+bool VentureScout::getStatus()
+{
+	if (_UpperLoanLimit == 0)
+		return false;
+	else return true;
+}
+
+void VentureScout::borrowItem()
+{
+	_UpperLoanLimit--;
+	borrowing = true;
+}
+
+void VentureScout::returnItem()
+{
+	_UpperLoanLimit++;
+	if (_UpperLoanLimit == 3)
+		borrowing = false;
+}
+
+RoverScout::RoverScout(string UserId, string UserName, string Section, int DateOfBirth, string Address) {
+	this->_UserId = UserId;
+	this->_UserName = UserName;
+	this->_Section = Section;
+	this->_DateOfBirth = DateOfBirth;
+	this->_Address = Address;
+	_UpperLoanLimit = 5;
+}
+
+RoverScout::RoverScout() {}
+
+
+bool RoverScout::getStatus()
+{
+	if (_UpperLoanLimit == 0)
+		return false;	
+	else return true;
+}
+
+void RoverScout::borrowItem()
+{
+	_UpperLoanLimit--;
+	borrowing = true;
+}
+
+void RoverScout::returnItem()
+{
+	_UpperLoanLimit++;
+	if (_UpperLoanLimit == 5)
+		borrowing = false;
+}
+
+Scouter::Scouter(string UserId, string UserName, string Section, int DateOfBirth, string Address, string Rank) {
+	this->_UserId = UserId;
+	this->_UserName = UserName;
+	this->_Section = Section;
+	this->_DateOfBirth = DateOfBirth;
+	this->_Address = Address;
+	_Rank = Rank;
+	_UpperLoanLimit = 5;
+}
+
+Scouter::Scouter() {}
+
+bool Scouter::getStatus()
+{
+	if (_UpperLoanLimit == 0)
+		return false;
+	else return true;
+}
+
+void Scouter::borrowItem()
+{
+	_UpperLoanLimit--;
+	borrowing = true;
+}
+
+void Scouter::returnItem()
+{
+	_UpperLoanLimit++;
+	if (_UpperLoanLimit == 5)
+		borrowing = false;
 }
